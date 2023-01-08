@@ -4,7 +4,7 @@ ____
 Grâce à la formation de **Mosh HAMEDANI**, j'ai pu réaliser cette application sur React
 version **18.2.0**.
 
-Vous pouvez trouver la formation sur ['codewithmosh']('https://codewithmosh.com/courses')
+Vous pouvez trouver la formation sur [codewithmosh](https://codewithmosh.com)
 
 
 Vidly est une applicatin qui gère une interface d'utilisateur complète pour bien maitriser 
