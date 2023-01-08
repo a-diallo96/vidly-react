@@ -54,9 +54,9 @@ class NewMovieForm extends Form {
         };
     }
 
-    doSubmit(){
+    async doSubmit(){
 
-        saveMovie(this.state.data);
+        await saveMovie(this.state.data);
         const {navigate} =this.props.router;
         navigate("/movies");
 
