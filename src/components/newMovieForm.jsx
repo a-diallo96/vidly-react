@@ -40,7 +40,6 @@ class NewMovieForm extends Form {
             navigate("/not-found");
         }
          this.setState({data: this.mapToViewModel(movie)});  
-         //console.log(this.state.errors);
        
     }
 

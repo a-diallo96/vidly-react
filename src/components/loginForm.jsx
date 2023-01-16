@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
+import auth from '../services/authService';
+import { withRouter } from './common/withRouter';
+import {  Navigate } from 'react-router-dom';
 
 class LoginForm extends Form {
    
@@ -16,12 +19,23 @@ class LoginForm extends Form {
     };
 
 
-    doSubmit = () => {
-        //call server
-        console.log("submit")
+    doSubmit = async () => {
+        try {
+            const {data} = this.state;
+            await auth.login(data.username, data.password);
+            const {state} = this.props.router.location;
+            window.location = state ? state.from.pathname : "/";
+        } catch (ex) {
+            if(ex.response && ex.response.status === 400) {
+                const errors = {...this.state.errors};
+                errors.username = ex.response.data;
+                this.setState({ errors });
+            }
+        }
     }
 
     render() { 
+        if(auth.getCurrentUser()) return <Navigate to="/" />;
         return (
         <div>
             <h1>Login</h1>
@@ -35,5 +49,5 @@ class LoginForm extends Form {
     }
 }
  
-export default LoginForm;
+export default withRouter(LoginForm);
 

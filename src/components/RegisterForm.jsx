@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
+import * as userService from '../services/userService';
+import { withRouter } from './common/withRouter';
+import auth from '../services/authService';
+
 
 class RegisterForm extends Form {
     state = {  
@@ -19,9 +23,20 @@ class RegisterForm extends Form {
         
     };
 
-    doSubmit = () => {
-        //call server
-        console.log("submit")
+    doSubmit = async () => {
+        try{
+            const response = await userService.register(this.state.data);
+            auth.loginWithJwt(response.headers['x-auth-token']);
+            window.location = "/";
+
+        }
+        catch (ex) {
+            if(ex.response && ex.response.status === 400) {
+                const errors = {...this.state.errors};
+                errors.username = ex.response.data;
+                this.setState({ errors });
+            }
+        }
     } 
     render() { 
         return (
@@ -38,4 +53,4 @@ class RegisterForm extends Form {
     }
 }
  
-export default RegisterForm;
+export default withRouter(RegisterForm);
